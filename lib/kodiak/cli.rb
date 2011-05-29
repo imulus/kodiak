@@ -15,12 +15,12 @@ module Kodiak
 		if options[:force]
 			continue = "yes"
 		else
-			puts "\nPush these files? ---------"
-			puts "[environment = #{options[:environment]}]"
+			puts "[environment = #{options[:environment]}]\n"
+			puts "\nPush these files?"
 			config.files.each do |file|
 				puts "  - #{file[:source]} --> #{file[:destination]}"
 			end
-			puts "Continue? [yes|no]"
+			puts "\nContinue? [yes|no]"
 			continue = STDIN.gets.chomp
 		end
 

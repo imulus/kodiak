@@ -7,11 +7,16 @@ module Kodiak
 			@config = config
 			@files = @config.files
 			@options = options
-			transport
-		end
-		
 
-		def transport
+			if @config.ftp?
+				transport_ftp
+			else
+				transport_local
+			end
+		end
+
+
+		def transport_local
 			puts "Pushing to [#{@options[:environment]}]"
 
 			@files.each do |file|
@@ -19,26 +24,64 @@ module Kodiak
 				destination = file[:destination]
 
 				if @options[:force]
-					push source, destination					
-				
+					push source, destination
+
 				elsif File.exists? destination
 					source_changed 			= File.ctime(source)
 					destination_changed = File.ctime(destination)
-					
+
 					# check if destination is older than source
-					if (destination_changed <=> source_changed) == -1 
+					if (destination_changed <=> source_changed) == -1
 						push source, destination
 					else
 						ignore source, destination
 					end
-					
+
 				else
 					push source, destination
-				end		
-							
+				end
 			end
 		end
 
+
+		def transport_ftp
+			require 'net/ftp'
+			credentials = @config.ftp
+
+			puts "Connecting to #{credentials['server']}..."
+
+		  Net::FTP.open credentials['server'] do |ftp|
+		    ftp.login credentials['username'], credentials['password']
+		    ftp.chdir credentials['path']
+
+				@files.each do |file|
+					source 			= file[:source]
+					destination = file[:destination]
+
+					if not File.directory? source
+						folders = destination.split("/")
+						filename = folders.pop
+
+						folders.each do |folder|
+							if not ftp.nlst.index(folder)
+								puts "- /#{folder} not found. Creating."
+								ftp.mkdir folder
+							end
+							puts "- opening directory /#{folder}"
+							ftp.chdir folder
+						end
+
+						puts "+ pushing #{filename}"
+						if File.directory? filename
+							ftp.mkdir filename
+						else
+							ftp.put source, filename
+						end
+						folders.length.times { ftp.chdir("..") }
+					end
+				end
+		  end
+		end
 
 
 		def push(source, destination)
@@ -50,6 +93,6 @@ module Kodiak
 			puts "  - Ignored #{source}"
 			puts "      Destination file was older than source"
 		end
-		
+
   end
 end

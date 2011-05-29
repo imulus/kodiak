@@ -3,20 +3,20 @@ require 'fileutils'
 module Kodiak
   class ConfigReader
 
-		attr_accessor :options, :config, :files
+		attr_accessor :options, :config, :files, :environment
 
 		def initialize(options)
 			@options = options
-			@config = get_config
+			@environment = @options[:environment]			
+			@input = get_config
 			@files = []
 			find_and_add_files
 		end
 		
 		
 		def find_and_add_files
-			environment = @options[:environment]
-			if @config[environment]
-				@config[environment]['files'].each do |source, destination|
+			if @input[@environment]
+				@input[@environment]['files'].each do |source, destination|
 					Dir.glob(source).each do |file|
 						input = { :source => file, :destination => destination }				
 						@files.push input
@@ -25,11 +25,40 @@ module Kodiak
 			else
 				puts "Environment '#{environment}' is not defined in kodiak.yaml"
 				puts "Environments defined:"
-				@config.each do |name, environment|
+				@input.each do |name, environment|
 					puts "- #{name}"
 				end
 				exit
 			end
+		end
+
+
+		def ftp?
+			@input[@environment]['ftp'] || false			
+		end
+		
+
+		def ftp
+			environment = @input[@environment]
+			
+			# supply a default path of root
+			if ! environment['path']
+				environment['path'] = ""
+			end
+
+			credentials = {}
+			items = ['server','username','password','path']
+			
+			#check that they provided all the creds we need
+			items.each do |item|
+				if ! environment[item]
+					puts "Missing FTP credential: #{item}"
+					exit
+				else
+					credentials[item] = environment[item]
+				end
+			end
+			return credentials
 		end
 
 		

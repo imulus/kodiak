@@ -1,9 +1,12 @@
 local:
   files:
-    'app/scripts/javascript/init.js' : 'public/scripts/init.js'
-    # 'app/stylesheets/css/.'     : 'public/css'
+    'app/scripts/javascript/application.js' : 'public/scripts/application.js'
     
 remote:
+  ftp: false
+  server  : ''
+  username: ''
+  password: ''
+  path    : ''
   files:
-    'app/scripts/javascript/**' : 'remote/scripts/'
-    'app/stylesheets/css/.'     : 'remote/css/'
+    'app/scripts/javascript/init.js' : 'wwwroot/scripts/scripts/init.js'
