@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+$: << File.expand_path(File.dirname(__FILE__) + "/../lib")
+require 'fileutils'
+require 'rubygems'
+require 'optparse'
+require 'kodiak'
+
+
+@options = {}
+
+OptionParser.new do |opts|
+  opts.on("-f", "--force", "Force") do |o|
+  	@options[:force] = o
+  end
+end.parse!
+
+
+# giddy up
+case ARGV.first
+when 'push'
+	Kodiak::push(@options)
+when 'watch'
+	Kodiak::watch(@options)
+else
+	Kodiak::usage
+end

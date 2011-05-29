@@ -1,0 +1,9 @@
+local:
+  files:
+    'app/scripts/javascript/init.js' : 'public/scripts/init.js'
+    # 'app/stylesheets/css/.'     : 'public/css'
+    
+remote:
+  files:
+    'app/scripts/javascript/**' : 'remote/scripts/'
+    'app/stylesheets/css/.'     : 'remote/css/'

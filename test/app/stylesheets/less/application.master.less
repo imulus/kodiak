@@ -1,0 +1,419 @@
+@import "../../../lib/stylesheets/less/global.reset";
+@import "../../../lib/stylesheets/less/global.methods";
+@import "../../../lib/stylesheets/less/global.utility";
+@import "application.fonts";
+
+// global vars
+@radius: 5px;
+@pad: 20px;
+@marg: 15px;
+
+@blue: #43a8d8;
+@red: #eb2020;
+@green: #348013;
+
+html {
+	width: 100%; height: 100%;
+	background: #000;
+}
+
+body {
+	min-width: 100%; height: 100%;
+	position: relative;
+	font: 13px/normal "Helvetica Neue", Arial, Helvetica, sans-serif;
+	color: #FFF;
+	background: #000;
+	.shadow();
+}
+
+h1, h2, h3, h4, h5 { font-weight: bold; }
+
+h1 { font-size: 22px; margin-bottom: @marg; }
+h2 { font-size: 20px; margin-bottom: 10px;}
+h3 { 
+	font-size: 18px; 
+	color: #AAA; 
+	margin-bottom: 5px;
+	a {
+		font-size: 13px;
+		line-height: 18px;
+		font-weight: normal;
+		text-decoration: underline;
+	}
+}
+
+
+h4 {
+	font-size: 15px;
+	a {
+		font-size: 13px;
+		margin-left: 5px;
+		font-weight: normal;
+	}
+}
+
+h5 {
+	font-size: 14px;
+	color: #777;
+}
+
+a {
+	color: @blue;
+	text-decoration: none;
+
+	&:hover {
+		color: @blue * 0.8;
+		text-decoration: underline;
+	}
+
+	&.delete, &.cancel {
+		color: @red;
+		&:hover {
+			color: @red * 0.8;
+		}
+	}
+
+	&.save {
+		color: @green;
+		&:hover {
+			color: @green * 0.8;
+		}
+	}
+
+	&.toggle-cancel {
+		&.active {
+			color: @red;
+			&:hover {
+				color: @red * 0.8;
+			}
+		}
+	}
+}
+
+button {
+	display: inline-block;
+	color: #000;
+	padding: 6px 12px;
+	.gradient(#DDD,#BBB,#DDD);
+	.highlight();
+
+	&:hover {
+		cursor: pointer;
+		.gradient(#FFF,#CCC,#DDD);
+	}
+
+	&:active {
+		.gradient(#CCC,#EEE,#DDD);
+		color: #000;
+	}
+}
+
+
+.button(){
+	color: #CCC;
+	padding: 5px 10px;
+	border: 1px solid #111;
+	text-decoration: none;
+	font-weight: normal;	
+	-webkit-box-shadow: inset 0 1px 0px rgba(255,255,255,0.2);
+ 	-moz-box-shadow: inset 0 1px 0px rgba(255,255,255,0.2);
+  box-shadow: inset 0px 1px 0px rgba(255,255,255,0.2);
+	.rounded(3px);
+	.gradient(#555,#333,#444);
+	
+	
+	&:hover {
+		color: #FFF;
+		text-decoration: none;
+		.gradient(@blue, @blue*0.7, @blue);
+	}
+	
+	&:active {
+		.gradient(@blue*0.7, @blue, @blue);
+	}
+	
+	b {
+		margin-right: 5px;
+	}
+
+	&.add {
+		&:hover { .gradient(@green, @green*0.7, @green); }
+		&:active { .gradient(@green*0.7, @green, @green); }		
+	}
+
+	&.delete {
+		&:hover { .gradient(@red,@red*0.7,@red); }
+		&:active { .gradient(@red*0.7,@red,@red); }		
+	}
+}
+
+
+ul.sxs {
+	display: block;
+	li {
+		display: block;
+		float: left;
+		a {
+			display: block;
+		}
+	}
+}
+
+ul.actions {
+	margin: @marg 0;
+	li {
+		a {
+			.button();
+		}
+		&.left {
+			a {
+				border-right: 0;
+				.left-rounded(3px);				
+			}
+		}
+		&.right {
+			a {
+				.right-rounded(3px);
+			}
+		}		
+	}
+}
+
+.pictos { font-family: 'Pictos'; }
+.light { font-weight: 300; }
+
+	b { .pictos(); }
+
+
+
+
+// layout
+
+@panel_width: 250px;
+
+div#main {
+	position: absolute;
+	z-index: 0;
+	top: 0; right: 0;
+	left: @panel_width + (2 * @pad); bottom: 0;
+
+	div#map {
+		width: 100%; height: 100%;
+	}
+	
+	div#loading {
+		display: none;
+		position: absolute;
+		top: 0; right: 0;
+		width: 100%; height: 100%;
+		z-index: 9999;
+		background: rgba(0,0,0,0.8);
+		
+		img {
+			display: block;
+			width: auto; height: auto;
+			position: absolute;
+			top: 50%; left: 50%;
+		}
+	}	
+}
+
+div#panels {
+	position: absolute;
+	z-index: 1;
+	top: 0; bottom: 0; left: 0;
+	background: rgba(0,0,0,0.5);
+}
+
+div.panel {
+	width: @panel_width;
+	position: absolute;
+	top: 0; bottom: 0; left: 0;
+	padding: @pad;
+	.gradient(#333,#111,#222);
+}
+
+div.panel div.panel {
+	display: none;
+	left: -100%;
+	.boxshadow(0, 0, 20px, 1);
+}
+
+
+
+
+ul.nav {
+	margin-bottom: @marg;
+
+	li {
+		display: block;
+		position: relative;
+
+		a {
+			display: block;
+			position: relative;
+			font-size: 18px;
+			line-height: 1;
+			font-weight: bold;
+			padding: 10px 0px;
+			border-top: 1px solid #444;
+			border-bottom: 1px solid #000;
+			text-decoration: none;
+			color: #AAA;
+			.shadow();
+
+			b {
+				font-size: 60%;
+				line-height: inherit;
+			}
+
+			b.check {
+				font-size: 100%;
+				margin-right: 10px;
+				color: #444;
+			}
+
+			&.active {
+				color: #FFF;
+				b.check {
+					color: @green;
+					text-shadow: 0 0 20px rgba(52, 128, 19, 0.5);
+				}
+			}
+
+			&:hover {
+				color: #FFF;
+				text-decoration: none;
+				b.check {
+					color: inerhit;
+				}
+			}			
+
+		}
+
+		.mini {
+			.button();
+			position: absolute;
+			top: 10px; right: 0px;
+			font-size: 12px;
+			line-height: 1;
+			padding: 4px 8px;
+		}
+	}
+}
+
+
+ul.overlays {
+	margin-bottom: 10px;
+	padding: 10px 0;
+	border-top: 1px solid #444;
+}
+
+
+
+div#menu {
+
+	div#header {
+		margin-bottom: 10px;
+		.shadow();
+		h1 {
+			margin-bottom: 0;
+		}
+	}
+
+	ul#main-menu {
+		li {
+			a {
+				padding: 15px 0px 15px;
+				padding-left: 45px;
+				b {
+					display: block;
+					font-size: 22px;
+					color: #555;
+					border: 2px solid #555;
+					.rounded(4px);
+					padding: 2px 2px 1px;
+					position: absolute;
+					top: 10px; left: 0;
+				}
+				&.tucked {
+					display: none;
+				}
+			}
+		}
+	}
+
+	&.inactive {
+		width: 50px;
+		div#header {
+			display: none;
+		}
+
+		ul#main-menu {
+
+			li {
+				a {
+					width: 50px; height: 60px;
+					padding: 0;
+					span {
+						display: none;
+					}
+					b {
+						font-size: 31px;
+						padding: 4px 4px 3px;
+						left: 3px;
+						.gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.5), #222);
+						&:hover {
+							color: #888;
+							border-color: #888;
+							.gradient( #333, #222, #222);
+						}
+					}
+					&.tucked {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}
+
+form {
+
+	label {
+		display: block;
+		margin-bottom: 5px;
+		font-weight: bold;
+		color: #CCC;
+	}
+
+	input {
+		display: block;
+		width: @panel_width - 10px;
+		padding: 5px;
+		font: inherit;
+		border: 1px solid #CCC;
+		margin-bottom: 10px;
+		.gradient(#DDD,#FFF,#FFF);
+	}
+
+
+}
+
+
+
+div.flyout {
+	display: none;
+	position: absolute;
+	top: @pad; left: 100%;
+	padding: @pad;
+	border: 1px solid rgba(0,0,0,0.9);
+	.gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.9), #000);
+	
+	h3 {
+		color: #FFF;
+	}
+}
+
+
+

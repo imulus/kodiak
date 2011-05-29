@@ -1,0 +1,13 @@
+------------------------------------------
+Kodiak - A static file transporter
+http://github.com/imulus/kodiak
+------------------------------------------
+
+Usage :  'kodiak Action [Environment] [Options]'
+
+== Actions
+  push	- Transports files, requires environment param  | ex: 'kodiak push local'
+
+== Options
+  -f | --force	- skips safety prompt and force overwrites
+
