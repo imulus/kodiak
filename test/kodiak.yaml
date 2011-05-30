@@ -1,6 +1,6 @@
 local:
   files:
-    'app/scripts/javascript/application.js' : 'public/scripts/application.js'
+    'app/scripts/javascript/application/application.js' : 'public/scripts/application.js'
     
 remote:
   ftp: false

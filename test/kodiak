@@ -18,6 +18,8 @@ end.parse!
 
 # giddy up
 case ARGV.first
+when 'generate'
+	Kodiak::Generator.new(@options).generate	
 when 'push'
 	Kodiak::push(@options)
 when 'watch'

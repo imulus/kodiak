@@ -91,7 +91,7 @@ module Kodiak
 
 		def ignore(source, destination)
 			puts "  - Ignored #{source}"
-			puts "      Destination file was older than source"
+			puts "      Destination file was newer than source"
 		end
 
   end
