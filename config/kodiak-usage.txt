@@ -1,3 +1,7 @@
+ __  __  ____  ____  _   ____   __  __ 
+|  |/  // () \| _) \| | / () \ |  |/  /
+|__|\__\\____/|____/|_|/__/\__\|__|\__\
+
 ------------------------------------------
 Kodiak - A static file transporter
 http://github.com/imulus/kodiak
@@ -9,6 +13,7 @@ Usage :  'kodiak Action [Environment] [Options]'
   push      - Transports files, requires environment param  | ex: 'kodiak push local'
   watch     - Starts the Kodiak observe mechanism. Automatically transports files as they are modified.
   generate  - Create a Kodiak configuration file in this directory 
+  log       - View log history
 
 == Options
   -f | --force    - force overwrites on destination files

@@ -41,6 +41,8 @@ when 'watch'
 	Kodiak::watch(@options)
 when 'configure'
 	Kodiak::configure(@options)	
+when 'log'
+	Kodiak::view_log
 else
 	Kodiak::usage
 end

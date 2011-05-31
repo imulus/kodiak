@@ -78,6 +78,17 @@ module Kodiak
 	end
 
 
+	def self.view_log
+		if not File.exists? Kodiak::LOG_FILENAME
+			puts "Log file does not exist. Sorry."
+			exit
+		end
+		
+		file = File.open("#{Kodiak::LOG_FILENAME}", "r")
+		puts file.read
+		file.close
+	end
+
 	def self.usage
 	  file = File.open("#{Kodiak::CONFIG_PATH}/#{Kodiak::USAGE_FILENAME}", 'r')
 		puts file.read
