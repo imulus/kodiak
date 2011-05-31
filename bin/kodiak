@@ -1,8 +1,48 @@
 #!/usr/bin/env ruby
+
 $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 require 'fileutils'
 require 'rubygems'
 require 'optparse'
 require 'kodiak'
 
-Kodiak::Generator.new
+
+@options = {}
+
+OptionParser.new do |opts|
+  opts.on("-f", "--force", "Force") do |option|
+  	@options[:force] = option
+  end
+  opts.on("-q", "--quiet", "Quiet") do |option|
+  	@options[:quiet] = option
+  end
+  opts.on("-v", "--verbose", "Verbose") do |option|
+  	@options[:verbose] = option
+  end
+  opts.on("-s", "--safe", "Safe") do |option|
+  	@options[:safe] = option
+  end
+  opts.on("--user.name") do |option|
+  	@options[:name] = ARGV[0]
+  end
+  opts.on("--user.email") do |option|
+  	@options[:email] = ARGV[0]
+  end
+end.parse!
+
+
+# giddy up
+case ARGV.first
+when 'generate'
+	Kodiak::Generator.new(@options).generate	
+when 'push'
+	Kodiak::push(@options)
+when 'watch'
+	Kodiak::watch(@options)
+when 'configure'
+	Kodiak::configure(@options)	
+when 'log'
+	Kodiak::view_log
+else
+	Kodiak::usage
+end

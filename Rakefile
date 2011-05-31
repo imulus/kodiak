@@ -14,12 +14,12 @@ Echoe.new(Kodiak::APP_NAME.downcase, Kodiak::VERSION) do |p|
   p.email          = "developer@imulus.com"
   p.ignore_pattern = ["tmp/*", "script/*", "test/*", "assets/*"]
   
-  target_os = Config::CONFIG['target_os']
-
   dependencies = Array.new
   dependencies << "term-ansicolor >=1.0.5"
   dependencies << "directory_watcher >=1.4.0"
   
+  target_os = Config::CONFIG['target_os']
+
   if target_os =~ /darwin/i
     dependencies << "rb-appscript >=0.6.1"
   elsif target_os =~ /linux/i

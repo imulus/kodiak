@@ -30,6 +30,8 @@ module Kodiak
 			end
 
 			Kodiak::Notification.new "Kodiak configuration created at #{Kodiak::CONFIG_FILENAME}\n", "success"
+			system("open #{Kodiak::CONFIG_FILENAME}")
+			exit
 		end
 
   end

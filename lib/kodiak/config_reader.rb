@@ -69,15 +69,16 @@ module Kodiak
 					if config.class == Hash && ! config.empty?
 				  	return config
 					else					  
-            puts "Kodiak configuration exists but has not been defined yet. Configure it in #{Kodiak::CONFIG_FILENAME}\n"
+            Kodiak::Notification.new "Kodiak configuration exists but has not been defined yet. Configure it in #{Kodiak::CONFIG_FILENAME}\n", "failure"
+						system("open #{Kodiak::CONFIG_FILENAME}")
 						exit(0)
 					end
 				rescue ArgumentError => e
-         puts "Could not parse YAML: #{e.message}\n"
+          Kodiak::Notification.new "Could not parse YAML: #{e.message}\n", "failure"
 				  exit
 				end
 			else
-        puts "Could not find a Kodiak configuration file in this directory. Use 'kodiak generate' to create one.\n"
+        Kodiak::Notification.new "Could not find a Kodiak configuration file in this directory. Use 'kodiak generate' to create one.\n", "failure"
 				exit
 			end
 		end
@@ -88,10 +89,9 @@ module Kodiak
 					user = YAML.load(File.open("#{ENV['HOME']}/#{Kodiak::GLOBAL_CONFIG}"))
 					if user.class == Hash && ! user.empty?
 						Kodiak.user = user
-						puts Kodiak.user
 						@user = user						
 					else					  
-            Kodiak::Notication.new "Kodiak has not been globally configured or the configuration is broken\n", "failure"
+            Kodiak::Notification.new "Kodiak has not been globally configured or the configuration is broken\n", "failure"
 						puts "To configure, use:"
 						puts 'kodiak configure --user.name "Firstname Lastname" --user.email "your_email@youremail.com"'
 						exit
@@ -101,7 +101,7 @@ module Kodiak
 				  exit
 				end
 			else
-        Kodiak::Notication.new "Kodiak has not been globally configured or the configuration is broken\n", "failure"
+        Kodiak::Notification.new "Kodiak has not been globally configured or the configuration is broken\n", "failure"
 				puts "To configure, use:"
 				puts 'kodiak configure --user.name "Firstname Lastname" --user.email "your_email@youremail.com"'
 				exit

@@ -4,7 +4,7 @@ module Kodiak
 		ARGV.shift
 
 		if ! ARGV[0]
-			puts "Push requires an environment parameter"
+      Kodiak::Notification.new "Push requires an environment parameter\n", "failure"			
 			puts "Example: 'kodiak push remote'"
 			exit
 		end
