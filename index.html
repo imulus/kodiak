@@ -1,1 +1,136 @@
-My Github Page
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Kodiak | A simple transporter for your static assets</title>
+	<meta name="description" content="A simple transporter for your static assets" />
+	<meta name="keywords" content="Kodiak, Kodiak, GitHub, static assets, transporter, Imulus" />
+
+	<link rel="stylesheet" href="./css/reset.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="./css/fonts.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="./css/screen.css" type="text/css" media="screen" />
+</head>
+
+<body>
+
+<div id="header">
+	<div class="inner autoclear">
+		
+		<div class="left">
+			<h1><a href="http://github.com/imulus/kodiak">Kodiak</a></h1>
+		</div>
+
+		<div class="right">
+			<h2>A simple transporter for your static assets.<br />Think of it as your bus driver. Just tell it where to go.</h2>
+			<p>Kodiak makes shipping your static assets around easier. By allowing you to define multiple environments, Kodiak makes it simple to quickly deploy your files. It has a built-in directory watcher for faster development, automatic logging and even has Growl support. Giddy up.</p>
+		</div>
+
+	</div>
+</div>
+
+
+
+<div id="container">
+
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Installation</h3>
+		</div>
+		<div class="right">
+			<code><b>$</b> gem install kodiak</code>
+		</div>
+	</div>
+
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Configuration</h3>
+		</div>
+		<div class="right">
+			<code><b>$</b> cd myproject/scripts <br /> <b>$</b> kodiak generate	</code>
+			<p class="description">This will create the configuration file at kodiak.yaml. Open kodiak.yaml and define your environment(s) to meet your needs.</p>
+		</div>
+	</div>
+
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Usage</h3>
+		</div>
+		<div class="right">
+			<code><b>$</b> kodiak push [environment]</code>
+			<p class="description">Grab all of the source files in the supplied [environment] and will ship them over to their destination.</p>
+		</div>
+	</div>
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Watch</h3>
+		</div>
+		<div class="right">
+			<code><b>$</b> kodiak watch [environment]</code>
+			<p class="description">This will start the Kodiak "server" -- the directory watcher mechanism. Once started, any changes made to your source files will automatically trigger the transporter to move the changed file.</p>
+		</div>
+	</div>
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Log</h3>
+		</div>
+		<div class="right">
+			<code><b>$</b> kodiak log</code>
+			<p class="description">This will list out the log history in the current project.</p>
+		</div>
+	</div>	
+
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Options</h3>
+		</div>
+		<div class="right">
+			<code>
+			-f | --force    - force overwrites on destination files<br />
+		  -s | --safe   	- skip safety prompts<br />
+		  -q | --quiet    - suppress notifications<br />
+		  -v | --verbose  - output log messages
+		  </code>
+		</div>
+	</div>
+	
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Contribute</h3>
+		</div>
+		<div class="right">
+			<p><strong>We want your help. Fork us so we can make Kodiak better.</strong></p>
+			<code><b>$</b> git clone git://github.com/imulus/kodiak</code>
+		</div>
+	</div>
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Download</h3>
+		</div>
+		<div class="right">
+		  <p> 
+		    You can download this project in either
+		    <a href="http://github.com/imulus/kodiak/zipball/master">zip</a> or
+		    <a href="http://github.com/imulus/kodiak/tarball/master">tar</a> formats.
+		  </p>
+			<p class="description">or get the source code on GitHub : <a href="http://github.com/imulus/kodiak">imulus/kodiak</a></p>
+		</div>
+	</div>	
+	
+</div> <!-- end: #container -->
+
+
+<div id="footer">
+	<a href="http://www.imulus.com">
+		<img src="./images/imulus.png" />
+	</a>
+</div>
+
+
+<a href="http://github.com/imulus/kodiak"><img style="position: fixed; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
