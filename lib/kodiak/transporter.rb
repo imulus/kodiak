@@ -12,7 +12,8 @@ module Kodiak
 
 
 		def transport(files = nil)
-			@pushed = @ignored = 0
+			@pushed = []
+			@ignored = []
 			@files = files || @files
 			if @config.ftp?
 				ftp
@@ -26,31 +27,38 @@ module Kodiak
 			puts "\nPushing to [#{@options[:environment]}]"
 
 			@files.each do |file|
-				source 			= file[:source]
-				destination = file[:destination]
 
 				if @options[:force]
-					push source, destination
+					push file
 
-				elsif File.exists? destination
-					source_changed 			= File.ctime(source)
-					destination_changed = File.ctime(destination)
+				elsif File.exists? file[:destination]
+					source_changed 			= File.ctime(file[:source])
+					destination_changed = File.ctime(file[:destination])
 
 					# check if destination is older than source
 					if (destination_changed <=> source_changed) == -1
-						push source, destination
+						push file
 					else
-						ignore source, destination, "Destination file was newer than source. Use --force to force overwrite."
+						ignore file, "Destination file was newer than source."
 					end
 
 				else
-					push source, destination
+					push file
 				end
 			end
 
 			if ! @options[:quiet]
-		  	Kodiak::Notification.new "\nPushed #{@pushed} files, Ignored #{@ignored} files\n\n", "success"
+		  	Kodiak::Notification.new "\nPushed #{@pushed.length} files, Ignored #{@ignored.length} files\n\n", "success"
+			else
+				puts "\nPushed #{@pushed.length} files, Ignored #{@ignored.length} files\n\n"
 			end
+
+			if @options[:verbose] && @ignored.length > 0
+				puts "Some files were ignored. Use --force to force overwrite.\n\n"
+			end
+			
+			Kodiak.log :pushed => @pushed, :ignored => @ignored
+			
 		end
 
 
@@ -94,28 +102,27 @@ module Kodiak
 		end
 
 
-		def push(source, destination)
-			FileUtils.cp_r source, destination, :remove_destination => true
-			Kodiak.log
+		def push(file)
+			FileUtils.cp_r file[:source], file[:destination], :remove_destination => true
 			
 			if @options[:verbose] 
-		  	Kodiak::Notification.new "Pushed #{source} --> #{destination}\n"
+		  	Kodiak::Notification.new "Pushed #{file[:source]} --> #{file[:destination]}\n"
 			else
-				puts " - Pushed #{source} --> #{destination}\n"
+				puts " - Pushed #{file[:source]} --> #{file[:destination]}\n"
 			end
-			
-			@pushed += 1
+
+			@pushed.push file
 		end
 
-		def ignore(source, destination, reason)
-			Kodiak.log
+		def ignore(file, reason)
+			file[:reason] = reason
 			if @options[:verbose] 
-	  		Kodiak::Notification.new "Ignored #{source}\n     - #{reason}\n"
+	  		Kodiak::Notification.new "Ignored #{file[:source]}\n     - #{file[:reason]}\n"
 			else
-	  		puts "Ignored #{source}\n     - #{reason}\n"	
+	  		puts "Ignored #{file[:source]}\n     - #{file[:reason]}\n"	
 			end
 			
-			@ignored += 1
+			@ignored.push file
 		end
 
   end
