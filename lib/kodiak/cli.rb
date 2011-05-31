@@ -12,7 +12,7 @@ module Kodiak
 		options[:environment] = ARGV[0]
 		config = Kodiak::ConfigReader.new(options)
 
-		if options[:quiet]
+		if options[:safe]
 			continue = "yes"
 		else
 			puts "[environment = #{options[:environment]}]\n"
@@ -46,7 +46,7 @@ module Kodiak
 		options[:environment] = ARGV[0]
 		config = Kodiak::ConfigReader.new(options)
 
-		if options[:quiet]
+		if options[:safe]
 			continue = "yes"
 		else
 			puts "Start Kodiak server? [yes|no]"

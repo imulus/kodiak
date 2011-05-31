@@ -1,8 +1,8 @@
 local:
   files:
     'app/scripts/javascript/application/application.js' : 'public/scripts/application.js'
-    'app/scripts/javascript/application/init.js' : 'public/scripts/init.js'
-    'app/scripts/javascript/map/map.js' : 'public/scripts/map.js'    
+    'app/scripts/javascript/application/init.js'        : 'public/scripts/init.js'
+    'app/scripts/javascript/map/map.js'                 : 'public/scripts/init.js'    
     
 remote:
   ftp: false

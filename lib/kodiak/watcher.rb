@@ -27,6 +27,7 @@ module Kodiak
 				dw.stable = 2 			# mutiple of interval for 'stable' events
 				dw.start
 			end		
+			
 			puts "Kodiak server started"
 			STDIN.gets
 			dw.stop			

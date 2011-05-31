@@ -1,5 +1,6 @@
 require 'yaml'
 require 'kodiak/cli'
+require 'kodiak/notification'
 require 'kodiak/generator'
 require 'kodiak/config_reader'
 require 'kodiak/transporter'
@@ -11,6 +12,6 @@ module Kodiak
 	ROOT_PATH 			= Dir.pwd
 	CONFIG_PATH 		= File.expand_path(File.dirname(__FILE__) + "/../config")
 	CONFIG_FILENAME = "kodiak.yaml"
-	USAGE_FILENAME 	= "kodiak-usage.txt"	
 	CONFIG_ICON 		= "kodiak-icon.png"
+	USAGE_FILENAME 	= "kodiak-usage.txt"
 end

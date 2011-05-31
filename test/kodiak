@@ -16,6 +16,12 @@ OptionParser.new do |opts|
   opts.on("-q", "--quiet", "Quiet") do |option|
   	@options[:quiet] = option
   end
+  opts.on("-v", "--verbose", "Verbose") do |option|
+  	@options[:verbose] = option
+  end
+  opts.on("-s", "--safe", "Safe") do |option|
+  	@options[:safe] = option
+  end
 end.parse!
 
 

@@ -28,6 +28,9 @@ var Application = Application || function(data){
 			var href = $(this).attr("href");
 			var $remote = $(href);
 
+
+
+
 			if( $remote.is(':hidden') ){
 				$remote.siblings('.flyout').slideUp(fxspeed);
 				$remote.slideDown(fxspeed);				
@@ -38,6 +41,10 @@ var Application = Application || function(data){
 		});
 		return self;
 	}
+
+
+
+
 
 
 //

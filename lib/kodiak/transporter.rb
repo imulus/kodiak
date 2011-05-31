@@ -1,28 +1,29 @@
 module Kodiak
   class Transporter
 
-		attr_accessor :config, :options, :files
+		attr_accessor :config, :options, :files, :pushed, :ignored
 
 		def initialize(config, options)
-			@config = config
-			@files = @config.files
-			@files = @config.files
-			@options = options
+			@config 	= config
+			@files 		= @config.files
+			@files 		= @config.files
+			@options 	= options
 		end
 
 
 		def transport(files = nil)
+			@pushed = @ignored = 0
 			@files = files || @files
 			if @config.ftp?
 				ftp
 			else
 				local
-			end			
-		end			
+			end
+		end
 
 
 		def local
-			puts "Pushing to [#{@options[:environment]}]"
+			puts "\nPushing to [#{@options[:environment]}]"
 
 			@files.each do |file|
 				source 			= file[:source]
@@ -39,12 +40,16 @@ module Kodiak
 					if (destination_changed <=> source_changed) == -1
 						push source, destination
 					else
-						ignore source, destination
+						ignore source, destination, "Destination file was newer than source. Use --force to force overwrite."
 					end
 
 				else
 					push source, destination
 				end
+			end
+
+			if ! @options[:quiet]
+		  	Kodiak::Notification.new "\nPushed #{@pushed} files, Ignored #{@ignored} files\n\n", "success"
 			end
 		end
 
@@ -91,12 +96,24 @@ module Kodiak
 
 		def push(source, destination)
 			FileUtils.cp_r source, destination, :remove_destination => true
-			puts "  - Pushed #{source} --> #{destination}"
+			
+			if @options[:verbose] 
+		  	Kodiak::Notification.new "Pushed #{source} --> #{destination}\n"
+			else
+				puts " - Pushed #{source} --> #{destination}\n"
+			end
+			
+			@pushed += 1
 		end
 
-		def ignore(source, destination)
-			puts "  - Ignored #{source}"
-			puts "      Destination file was newer than source. Use --force to force overwrite."
+		def ignore(source, destination, reason)
+			if @options[:verbose] 
+	  		Kodiak::Notification.new "Ignored #{source}\n     - #{reason}\n"
+			else
+	  		puts "Ignored #{source}\n     - #{reason}\n"	
+			end
+			
+			@ignored += 1
 		end
 
   end

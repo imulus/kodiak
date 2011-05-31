@@ -11,6 +11,8 @@ Usage :  'kodiak Action [Environment] [Options]'
   generate  - Create a Kodiak configuration file in this directory 
 
 == Options
-  -f | --force  - force overwrites on destination files
-  -q | --quiet  - skip safety prompts
+  -f | --force    - force overwrites on destination files
+  -s | --safe   	- skip safety prompts
+  -q | --quiet    - suppress notifications
+  -v | --verbose  - output log messages
 
