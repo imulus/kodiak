@@ -7,8 +7,8 @@ $: << File.expand_path(File.dirname(__FILE__) + "/lib")
 require 'kodiak'
 
 Echoe.new(Kodiak::APP_NAME.downcase, Kodiak::VERSION) do |p|
-  p.description    = "The description"
-	p.summary 			 = "The summary"
+  p.description    = "A static file transporter"
+	p.summary 			 = ""
   p.url            = "http://github.com/imulus/kodiak"
   p.author         = "Imulus"
   p.email          = "developer@imulus.com"
