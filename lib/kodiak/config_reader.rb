@@ -3,13 +3,14 @@ require 'fileutils'
 module Kodiak
   class ConfigReader
 
-		attr_accessor :options, :config, :files, :environment
+		attr_accessor :options, :input, :files, :environment, :user
 
 		def initialize(options)
 			@options = options
 			@environment = @options[:environment]			
 			@input = get_config
 			@files = []
+			check_and_set_globals
 			find_and_add_files
 		end
 		
@@ -60,7 +61,6 @@ module Kodiak
 			end
 			return credentials
 		end
-
 		
 		def get_config
 			if File.exists?(Kodiak::CONFIG_FILENAME)
@@ -81,6 +81,33 @@ module Kodiak
 				exit
 			end
 		end
+		
+		def check_and_set_globals
+			if File.exists? "#{ENV['HOME']}/#{Kodiak::GLOBAL_CONFIG}"
+				begin
+					user = YAML.load(File.open("#{ENV['HOME']}/#{Kodiak::GLOBAL_CONFIG}"))
+					if user.class == Hash && ! user.empty?
+						Kodiak.user = user
+						puts Kodiak.user
+						@user = user						
+					else					  
+            Kodiak::Notication.new "Kodiak has not been globally configured or the configuration is broken\n", "failure"
+						puts "To configure, use:"
+						puts 'kodiak configure --user.name "Firstname Lastname" --user.email "your_email@youremail.com"'
+						exit
+					end
+				rescue ArgumentError => e
+         puts "Could not parse YAML: #{e.message}\n"
+				  exit
+				end
+			else
+        Kodiak::Notication.new "Kodiak has not been globally configured or the configuration is broken\n", "failure"
+				puts "To configure, use:"
+				puts 'kodiak configure --user.name "Firstname Lastname" --user.email "your_email@youremail.com"'
+				exit
+			end
+		end
+		
 
   end
 end

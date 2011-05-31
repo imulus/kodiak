@@ -1,4 +1,5 @@
 require 'yaml'
+require 'kodiak/utils'
 require 'kodiak/cli'
 require 'kodiak/notification'
 require 'kodiak/generator'
@@ -14,4 +15,17 @@ module Kodiak
 	CONFIG_FILENAME = "kodiak.yaml"
 	CONFIG_ICON 		= "kodiak-icon.png"
 	USAGE_FILENAME 	= "kodiak-usage.txt"
+	GLOBAL_CONFIG		= ".kodiak_config"
+	LOG_FILENAME		= ".kodiak_log"	
+	
+	attr_accessor :user
+	
+	def self.user=(user)
+		@user = user
+	end
+	
+	def self.user
+		@user
+	end
+	
 end

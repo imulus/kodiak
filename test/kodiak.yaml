@@ -1,14 +1,27 @@
+# Example environments
+# development:
+#   files:
+#     'src/javascript/application.js' : 'public/scripts/application.js'
+#     'src/css/screen.css'            : 'public/css/screen.css'
+#     
+# staging:
+#   files:
+#     'src/javascript/application.js' : 'public/scripts/application.js'
+#     'src/css/screen.css'            : 'public/css/screen.css'
+#
+# production:
+#   files:
+#     'src/javascript/application.js' : 'public/scripts/application.js'
+#     'src/css/screen.css'            : 'public/css/screen.css'
+
+#########################################################################################################
+
+# You can name your environments how you wish. 'development', 'staging' and 'production are just examples.
+# Once your environments are defined, you can call them from the command line | ex: kodiak push staging
+
+#########################################################################################################
+
 local:
   files:
     'app/scripts/javascript/application/application.js' : 'public/scripts/application.js'
     'app/scripts/javascript/application/init.js'        : 'public/scripts/init.js'
-    'app/scripts/javascript/map/map.js'                 : 'public/scripts/init.js'    
-    
-remote:
-  ftp: false
-  server  : ''
-  username: ''
-  password: ''
-  path    : ''
-  files:
-    'app/scripts/javascript/init.js' : 'wwwroot/scripts/scripts/init.js'

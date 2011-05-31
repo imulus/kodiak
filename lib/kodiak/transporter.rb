@@ -96,6 +96,7 @@ module Kodiak
 
 		def push(source, destination)
 			FileUtils.cp_r source, destination, :remove_destination => true
+			Kodiak.log
 			
 			if @options[:verbose] 
 		  	Kodiak::Notification.new "Pushed #{source} --> #{destination}\n"
@@ -107,6 +108,7 @@ module Kodiak
 		end
 
 		def ignore(source, destination, reason)
+			Kodiak.log
 			if @options[:verbose] 
 	  		Kodiak::Notification.new "Ignored #{source}\n     - #{reason}\n"
 			else

@@ -14,13 +14,12 @@
 #     'src/javascript/application.js' : 'public/scripts/application.js'
 #     'src/css/screen.css'            : 'public/css/screen.css'
 
-#########################################################################################
+#########################################################################################################
 
-# You can name your environments how you wish. 'local' and 'remote' are just examples.
-# Once your environments are defined, you can call them from the command line
-# ex: kodiak push staging
+# You can name your environments how you wish. 'development', 'staging' and 'production are just examples.
+# Once your environments are defined, you can call them from the command line | ex: kodiak push staging
 
-#########################################################################################
+#########################################################################################################
 
 
 

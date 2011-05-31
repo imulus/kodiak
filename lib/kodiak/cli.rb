@@ -2,7 +2,7 @@ module Kodiak
 
 	def self.push(options)
 		ARGV.shift
-		
+
 		if ! ARGV[0]
 			puts "Push requires an environment parameter"
 			puts "Example: 'kodiak push remote'"
@@ -31,12 +31,12 @@ module Kodiak
 			puts "Push canceled by user"
 			exit
 		end
-	end	
+	end
 
 
 	def self.watch(options)
 		ARGV.shift
-		
+
 		if ! ARGV[0]
 			puts "Watch requires an environment parameter"
 			puts "Example: 'kodiak watch remote'"
@@ -58,7 +58,26 @@ module Kodiak
 		end
 	end
 
-	
+
+	def self.configure(options)
+		if not File.exists? "#{ENV['HOME']}/#{Kodiak::GLOBAL_CONFIG}"
+			FileUtils.cp_r "#{Kodiak::CONFIG_PATH}/#{Kodiak::GLOBAL_CONFIG}", "#{ENV['HOME']}/#{Kodiak::GLOBAL_CONFIG}", :remove_destination => true
+		end
+
+		user = ""
+		options.each do |key, value|
+		  user += "#{key} : #{value}\n"
+		end
+
+		file = File.open("#{ENV['HOME']}/#{Kodiak::GLOBAL_CONFIG}", "w+")
+		file.write(user)
+		file.close
+
+		Kodiak::Notification.new "Global configuration complete\n", "success"
+		Kodiak::Notification.new "#{user}"
+	end
+
+
 	def self.usage
 	  file = File.open("#{Kodiak::CONFIG_PATH}/#{Kodiak::USAGE_FILENAME}", 'r')
 		puts file.read
@@ -67,4 +86,4 @@ module Kodiak
 
 
 
-end	
+end

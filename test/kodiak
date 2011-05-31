@@ -22,6 +22,12 @@ OptionParser.new do |opts|
   opts.on("-s", "--safe", "Safe") do |option|
   	@options[:safe] = option
   end
+  opts.on("--user.name") do |option|
+  	@options[:name] = ARGV[0]
+  end
+  opts.on("--user.email") do |option|
+  	@options[:email] = ARGV[0]
+  end
 end.parse!
 
 
@@ -33,6 +39,8 @@ when 'push'
 	Kodiak::push(@options)
 when 'watch'
 	Kodiak::watch(@options)
+when 'configure'
+	Kodiak::configure(@options)	
 else
 	Kodiak::usage
 end
