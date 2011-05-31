@@ -3,6 +3,7 @@ require 'kodiak/cli'
 require 'kodiak/generator'
 require 'kodiak/config_reader'
 require 'kodiak/transporter'
+require 'kodiak/watcher'
 
 module Kodiak
 	APP_NAME 				= "Kodiak"

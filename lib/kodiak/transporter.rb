@@ -6,17 +6,22 @@ module Kodiak
 		def initialize(config, options)
 			@config = config
 			@files = @config.files
+			@files = @config.files
 			@options = options
-
-			if @config.ftp?
-				transport_ftp
-			else
-				transport_local
-			end
 		end
 
 
-		def transport_local
+		def transport(files = nil)
+			@files = files || @files
+			if @config.ftp?
+				ftp
+			else
+				local
+			end			
+		end			
+
+
+		def local
 			puts "Pushing to [#{@options[:environment]}]"
 
 			@files.each do |file|
@@ -44,7 +49,7 @@ module Kodiak
 		end
 
 
-		def transport_ftp
+		def ftp
 			require 'net/ftp'
 			credentials = @config.ftp
 
@@ -91,7 +96,7 @@ module Kodiak
 
 		def ignore(source, destination)
 			puts "  - Ignored #{source}"
-			puts "      Destination file was newer than source"
+			puts "      Destination file was newer than source. Use --force to force overwrite."
 		end
 
   end

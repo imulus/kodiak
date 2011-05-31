@@ -21,7 +21,12 @@ var Map = Map || function(params, element){
 		return self;		
 	};
 
-	
-
 	return self.initialize();
 };
+
+
+
+
+
+
+

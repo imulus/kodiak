@@ -7,8 +7,10 @@ Usage :  'kodiak Action [Environment] [Options]'
 
 == Actions
   push      - Transports files, requires environment param  | ex: 'kodiak push local'
+  watch     - Starts the Kodiak observe mechanism. Automatically transports files as they are modified.
   generate  - Create a Kodiak configuration file in this directory 
 
 == Options
-  -f | --force	- skips safety prompt and force overwrites
+  -f | --force  - force overwrites on destination files
+  -q | --quiet  - skip safety prompts
 

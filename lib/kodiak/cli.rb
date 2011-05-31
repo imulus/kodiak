@@ -12,7 +12,7 @@ module Kodiak
 		options[:environment] = ARGV[0]
 		config = Kodiak::ConfigReader.new(options)
 
-		if options[:force]
+		if options[:quiet]
 			continue = "yes"
 		else
 			puts "[environment = #{options[:environment]}]\n"
@@ -26,7 +26,7 @@ module Kodiak
 
 
 		if continue =~ /([Yy][Ee][Ss]|[Yy]|1)/
-			Kodiak::Transporter.new(config, options)
+			Kodiak::Transporter.new(config, options).transport
 		else
 			puts "Push canceled by user"
 			exit
@@ -35,8 +35,6 @@ module Kodiak
 
 
 	def self.watch(options)
-
-
 		ARGV.shift
 		
 		if ! ARGV[0]
@@ -48,35 +46,16 @@ module Kodiak
 		options[:environment] = ARGV[0]
 		config = Kodiak::ConfigReader.new(options)
 
-		if options[:force]
+		if options[:quiet]
 			continue = "yes"
 		else
-			puts "Start Kodiak watch? [yes|no]"
+			puts "Start Kodiak server? [yes|no]"
 			continue = STDIN.gets.chomp
 		end
 
-
 		if continue =~ /([Yy][Ee][Ss]|[Yy]|1)/
-			Kodiak::Transporter.new(config, options)
-			require 'directory_watcher'
-
-			dw = DirectoryWatcher.new '.', :glob => '**/*.txt'
-			dw.add_observer do |*args| 
-				args.each do |event| 
-					puts event.inspect
-
-				end
-			end
-
-			dw.interval = 0.5
-			dw.stable = 2
-
-			dw.start
-			STDIN.gets
-			dw.stop			
+			Kodiak::Watcher.new(config, options)
 		end
-
-
 	end
 
 	
